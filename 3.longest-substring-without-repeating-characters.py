@@ -8,26 +8,19 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         # trying out sliding window
-        left, right = 0, 0  # sliding window range
-        char_d = {} # character position
-        c = 0
-        while left < len(s):
-
-            char_pos = char_d.get(s[right])
+        left = 0  # sliding window range
+        char_pos = {} # character position
+        length = 0
+        for right in range(len(s)):
+            char = s[right]
             
-            if char_pos is None: # char not in dict
-                char_d[s[right]] = right
-                if right < len(s) -1:
-                    right += 1
-            else: # char in dict, max lenght reached
-                local_max = len(char_d)
-                if local_max > c: c = local_max
-                # print(f'dict: {char_d}, n_pos: {char_pos+1}, local: {local_max}, right: {right}, left: {left}')
-                left = char_pos + 1
-                right = left
-                char_d = {}
+            if char in char_pos and char_pos[char] >= left: # repeating and in current substring (left forward)
+                left = char_pos[char] + 1
+            else:
+                length = max(length, right-left + 1)
+            char_pos[char] = right
 
-        return c
+        return length       
             
             
         
