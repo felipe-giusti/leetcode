@@ -22,11 +22,11 @@ class Solution:
         stack = deque([(root, False)])
         res = []
 
+        if stack[-1][0] is None:
+            return []
+
         while stack:
             cur, visited = stack.pop()
-
-            if cur is None:
-                continue
 
             if visited or cur.children is None:
                 res.append(cur.val)
