@@ -14,25 +14,31 @@
 from collections import deque
 class Solution:
     def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        stack = deque([(root, False)])
+        stack = deque()
         res = []
+        cur = root
 
-        while stack:
-            cur, visited = stack.pop()
-            if cur is None:
-                continue
-
-            if visited:
-              res.append(cur.val)
+        while stack or cur is not None:
+            #go left first
+            if cur is not None:
+                stack.append(cur)
+                cur = cur.left
             else:
-                # Post -> left, right, root
-                stack.append((cur, True))
-                stack.append((cur.right, False))
-                stack.append((cur.left, False))  
+                # left is None, try right
+                tmp = stack[-1].right
+                if tmp is not None:
+                    # not leaf node, set cur and reloop
+                    cur = tmp
+                else: # right None -> leaf
+                    tmp = stack.pop()
+                    res.append(tmp.val)
+                    while stack and tmp == stack[-1].right:
+                        # 
+                        tmp = stack.pop()
+                        res.append(tmp.val)
+            
         return res
             
-
-
 
 
 # @lc code=end
