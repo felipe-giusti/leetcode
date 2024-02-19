@@ -8,23 +8,29 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
 
-        # idea 1: find all combinations where sum = 0
-        # start i at 0 -> find 2 sum with rest of...
-        # if conditions -> add to final set
-        # repeat with indexes forward
+        # idea 2 -> sort + check sum
 
         triplets = set()
-        two_sum = set()
+        nums = sorted(nums)
 
-        for i, ni in enumerate(nums):
+        for i in range(len(nums) - 2):
+            target = -nums[i]
             #two sum
-            for num in nums[i+1:]:
-                target = -(num + ni)
-                if target in two_sum:
-                    t = tuple(sorted((ni, num, target)))
-                    triplets.add(t)
-                two_sum.add(num)
-            two_sum.clear()
-        return [list(t) for t in triplets]
+            l = i+1
+            r = len(nums) - 1
+
+            while l < r:
+                # print(f'i: {i}, l" {l}, r:{r}  || len: {len(nums)}')
+                if nums[l] + nums[r] == target:
+                    triplets.add((nums[i], nums[l], nums[r]))
+                    l += 1
+                    r -= 1
+                elif nums[l] + nums[r] < target:
+                    l += 1
+                else:
+                    r -= 1
+        return triplets
+                    
+
 # @lc code=end
 
