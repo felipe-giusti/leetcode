@@ -13,13 +13,18 @@ class Solution:
         
         while l < r:
             width = r - l
-            h = min(height[l], height[r])
-            max_area = max(max_area, width*h)
+            min_h = min(height[l], height[r])
+            max_area = max(max_area, width*min_h)
 
             if height[l] < height[r]:
                 l += 1
+                # saves on area calculation
+                while height[l] < min_h:
+                    l += 1
             else:
                 r -= 1
+                while height[r] < min_h:
+                    r -= 1
         return max_area
 
 # @lc code=end
