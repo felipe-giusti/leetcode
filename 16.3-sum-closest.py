@@ -13,6 +13,9 @@ class Solution:
         min_diff = 20001 # target between -10^4 and 10^4
 
         for i in range(len(nums) - 2):
+            if i>0 and nums[i] == nums[i-1]:
+                continue
+
             left = i + 1
             right = len(nums) - 1
 
