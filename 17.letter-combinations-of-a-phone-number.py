@@ -6,8 +6,6 @@
 
 # @lc code=start
 
-from collections import deque
-
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
         #using iteratively approach
@@ -32,18 +30,19 @@ class Solution:
         # a b c
         # ad ae af bd be bf ...
         # adg adh adi ...
-
-        i = 0
-        comb_stack = deque([l for l in phone[digits[i]]])
         
+        combinations = [""]    
 
-        while i < len(digits)-1:
-            i+=1
-            for _ in range(len(comb_stack)):
-                curr = comb_stack.pop()
-                for l in phone[digits[i]]:                    
-                    comb_stack.appendleft(curr+l)
-        return list(comb_stack)    
+        for d in digits:
+            new_combinations = []
+
+            for c in combinations:
+                for letter in phone[d]:
+                    new_combinations.append(c + letter)
+            combinations = new_combinations[:]
+        
+        return combinations
+
     
 
 # @lc code=end
