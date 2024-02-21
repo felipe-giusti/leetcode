@@ -6,9 +6,11 @@
 
 # @lc code=start
 
+from collections import deque
+
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        #using backtracking approach
+        #using iteratively approach
 
         phone = {
             '2': 'abc',
@@ -21,24 +23,27 @@ class Solution:
             '9': 'wxyz'
         }
 
-        combinations = []
-
         if not digits:
             return []
 
-        def backtrack(index, curr_comb):
-            # goal
-            if index == len(digits):
-                combinations.append(curr_comb)
-                return # next
-            
-            curr_digit = digits[index]
+        # add c for each string
+        # next iteration -> create new string for each string + add
+        # 23
+        # a b c
+        # ad ae af bd be bf ...
+        # adg adh adi ...
 
-            for letter in phone[curr_digit]:
-                backtrack(index+1, curr_comb + letter)
+        i = 0
+        comb_stack = deque([l for l in phone[digits[i]]])
+        
 
-        backtrack(0, "")
-        return combinations        
+        while i < len(digits)-1:
+            i+=1
+            for _ in range(len(comb_stack)):
+                curr = comb_stack.pop()
+                for l in phone[digits[i]]:                    
+                    comb_stack.appendleft(curr+l)
+        return list(comb_stack)    
     
 
 # @lc code=end
