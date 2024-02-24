@@ -10,12 +10,10 @@ class Solution:
         # you dont need to remove the duplicates
         i, c = 1, 1
         
-        while i < len(nums):
+        for i in range(1, len(nums)):
             if nums[i] != nums[i-1]:
                 nums[c] = nums[i]
-                c+=1
-            i+=1
-            
+                c+=1            
         return c
             
 # @lc code=end
