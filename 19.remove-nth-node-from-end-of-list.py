@@ -11,33 +11,23 @@
 #         self.val = val
 #         self.next = next
 
-from collections import deque
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        # window [parent, node, _, _] n = 3
+        # two pointer fast / slow
 
-        q = deque([head])
-        # sliding window, with n+1 
-        for _ in range(n):
-            if q[-1].next is None:
-                # node is first element, no parent
-                if n == len(q):
-                    return head.next
-                # n > linked list size
-                return
-            q.append(q[-1].next)
+        extra = ListNode(0, head)
+        fast, slow = extra, extra
+
+        # space n between pointers
+        for _ in range(n+1):
+            fast = fast.next
         
-        while q[-1].next:
-            q.popleft()
-            q.append(q[-1].next)
-
-        #parent of n th node
-        parent = q.popleft()
-        try:
-            parent.next = q[1]
-        except IndexError:
-            parent.next = None
-        return head      
+        while fast is not None:
+            fast = fast.next
+            slow = slow.next
+        # slow should be in node to be removed's parent
+        slow.next = slow.next.next
+        return extra.next
 
 # @lc code=end
 
