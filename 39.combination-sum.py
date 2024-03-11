@@ -6,11 +6,13 @@ class Solution:
             if cur_target == 0:
                 res.append(cur_comb)
                 return
-            if cur_target < 0:
+            if cur_target < 0 or i >= len(candidates):
                 return
             
-            for j in range(i, len(candidates)):
-                backtrack(cur_target - candidates[j], cur_comb + [candidates[j]], j)
             
+            backtrack(cur_target - candidates[i], cur_comb + [candidates[i]], i)
+            # backtrack failed, continue to next candidate
+            backtrack(cur_target, cur_comb, i+1)
+
         backtrack(target, [], 0)
         return res
