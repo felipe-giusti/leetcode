@@ -7,6 +7,9 @@ class Solution:
         for i in range(len(nums)-1):
             max_dist = max(max_dist, i + nums[i])
 
+            if max_dist >= len(nums)-1:
+                return res + 1
+
             if i == i_end:
                 res += 1
                 i_end = max_dist
