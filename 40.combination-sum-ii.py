@@ -18,9 +18,9 @@ class Solution:
                 if j>i and candidates[j] == candidates[j-1]:
                     continue
                 if s + candidates[j] <= target:
-                    cur_comb.append(candidates[j])
-                    backtrack(s+candidates[j], cur_comb, j+1)
-                    cur_comb.pop()
+                    # cur_comb.append(candidates[j])
+                    backtrack(s+candidates[j], cur_comb + [candidates[j]], j+1)
+                    # cur_comb.pop()
             
         candidates.sort()
         backtrack(0, [], 0)
