@@ -8,30 +8,25 @@
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
         START, END = 0, 1
-        i = 0
 
-        while i < len(intervals):
-            # Insert before the current interval
-            if newInterval[END] < intervals[i][START]:
-                intervals.insert(i, newInterval)
-                return intervals
+        res = []
 
-            # Skip intervals that end before the newInterval starts
-            elif newInterval[START] > intervals[i][END]:
-                i += 1
-
-            # Merge overlapping intervals
+        for i, interval in enumerate(intervals):
+            # insert before
+            if newInterval[END] < interval[START]:
+                res.append(newInterval)
+                return res + intervals[i:]
+            # insert after    
+            elif newInterval[START] > interval[END]:
+                res.append(interval)
+            # merge    
             else:
                 newInterval = [
-                    min(intervals[i][START], newInterval[START]),
-                    max(intervals[i][END], newInterval[END]),
-                ]
-                intervals.pop(i)  # Remove the current interval since it is merged
-
-        # If we reach here, the new interval goes at the end
-        intervals.append(newInterval)
-        return intervals
-
+                    min(interval[START], newInterval[START]),
+                    max(interval[END], newInterval[END])
+                    ]
+        res.append(newInterval)
+        return res
 
 
 # @lc code=end
