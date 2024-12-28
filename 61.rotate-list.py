@@ -19,33 +19,27 @@ class Solution:
 
         # to define how many rotations: mod with len
 
-        if not head or k == 0:
-            return head
-        
-        # rotate once to get len of list
-        next_node = head.next
-        value = head.val
-        n = 1
-        while next_node:
-            temp = next_node.val
-            next_node.val = value
-            value = temp
-
-            next_node = next_node.next
-            n += 1
-        head.val = value
-
-
-        for _ in range((k - 1) % n):
+        def rotate(head):
             next_node = head.next
             value = head.val
+            n = 1
             while next_node:
                 temp = next_node.val
                 next_node.val = value
                 value = temp
 
                 next_node = next_node.next
+                n += 1
             head.val = value
+            return n
+
+        if not head or k == 0:
+            return head
+        
+        n = rotate(head)
+
+        for _ in range((k - 1) % n):
+            rotate(head)
         
         return head
 
