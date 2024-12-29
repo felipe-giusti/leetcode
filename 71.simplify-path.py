@@ -8,28 +8,18 @@
 class Solution:
     def simplifyPath(self, path: str) -> str:
         # idea: split over slashes -> if .. pop last one
+        # after looking up other solutions, instead of doing it in reverse, we can just handle it like a stack and pop items from it
 
         parts = path.split("/")
-        back_counter = 0
-        res = []
+        res_dirs = []
 
-        # doing it in reverse so it's easier to deal with multiple "../" in a row
-        for i in range(len(parts)-1, -1, -1):
-            part = parts[i]
-            if not part or part == ".":
-                continue                
-            elif part == "..":
-                back_counter += 1
-            else:
-                if back_counter > 0:
-                    back_counter -= 1
-                    continue
-                res.append(part)
+        for part in parts:            
+            if res_dirs and part == "..":
+                res_dirs.pop()
+            elif part not in ["", ".", ".."]:
+                res_dirs.append(part)
 
-        return "/" + "/".join(reversed(res))
-
-
-
+        return "/" + "/".join(res_dirs)
         
 # @lc code=end
 
