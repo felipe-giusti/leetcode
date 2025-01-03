@@ -12,17 +12,10 @@
 #         self.next = next
 class Solution:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head:
-            return head
-
         cur = head
-        while cur.next:
+        while cur and cur.next:
             if cur.val == cur.next.val:
-                if cur.next.next:
-                    cur.next = cur.next.next
-                else:
-                    cur.next = None
-                    break
+                cur.next = cur.next.next
             else:
                 cur = cur.next
         return head
